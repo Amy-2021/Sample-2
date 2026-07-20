@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Lookup</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f8fb; color: #223; }
+      .card { max-width: 520px; margin: 0 auto; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+      form { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+      input { flex: 1; padding: 0.7rem; border-radius: 8px; border: 1px solid #cdd6e4; }
+      button { padding: 0.7rem 1rem; border: none; border-radius: 8px; background: #2563eb; color: white; cursor: pointer; }
+      .error { color: #b91c1c; margin-bottom: 1rem; }
+      .weather { margin-top: 1.2rem; padding: 1rem; background: #eef6ff; border-radius: 12px; }
+      .icon { font-size: 3rem; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Current Weather</h1>
+      <form action="/weather" method="post">
+        <input type="text" name="city" placeholder="Enter a city" required>
+        <button type="submit">Search</button>
+      </form>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      {% if weather %}
+        <div class="weather">
+          <div class="icon">{{ weather.icon_emoji }}</div>
+          <h2>{{ weather.city }}, {{ weather.country }}</h2>
+          <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+          <p><strong>Feels like:</strong> {{ weather.feels_like }}°C</p>
+          <p><strong>Condition:</strong> {{ weather.description|title }}</p>
+          <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+          <img src="{{ weather.icon_url }}" alt="Weather icon">
+        </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
